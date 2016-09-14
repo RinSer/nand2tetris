@@ -1,2 +1,2 @@
 # nand2tetris
-nand2tetris course projects
+My implementation of nand2tetris course projects.
