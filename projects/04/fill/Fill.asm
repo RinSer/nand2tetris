@@ -12,3 +12,44 @@
 // the screen should remain fully clear as long as no key is pressed.
 
 // Put your code here.
+(START)
+	@KBD  // Load the keyboard value
+        D=M
+
+	@WHITEN  // Do nothing if no key is pressed
+        D;JEQ 
+
+	@8192   // Array index kept in reg D
+	D=A
+
+(BLACKEN)
+	D=D-1   // Decrement the array index
+
+	@SCREEN
+	A=A+D   // Load the ith 16 pixels
+        M=-1
+
+	@BLACKEN // Return to the loop start if index is not 0
+	D;JNE
+
+	@END   // Skip the whiten loop
+	0;JMP
+
+(WHITEN)
+	@8192
+	D=A  // Array index
+
+(LOOP)
+	D=D-1 // Decrement the array index
+
+	@SCREEN
+	A=A+D  // Load the ith 16 pixels
+	M=-1
+
+	@LOOP // Return to the loop start if index is not 0
+	D;JNE
+
+(END)
+	@START
+        0;JMP // Infinit loop
+	
