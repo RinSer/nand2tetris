@@ -6,25 +6,24 @@
 // Multiplies R0 and R1 and stores the result in R2.
 // (R0, R1, R2 refer to RAM[0], RAM[1], and RAM[2], respectively.
 
-// Initialization start
+	// Initialization start
 	@R0 // load R0 value
 	D=M
 
-	@R3 // create index variable
+	@R3 // create the index variable at R3
 	M=D
 
 	@R2 // init the mult value to zero
 	M=0
 
-	@END
-	D;JEQ // do not multiply if the first value is 0
-
-// Initialization end
+	@END // do not multiply if the first value is 0
+	D;JEQ 
+	// Initialization end
 (WHILE)
 	@R2 // load the mult value
         D=M
 
-	@R1 // load the add value
+	@R1 // add the second value
         D=D+M
 
 	@R2 // increase the mult value
@@ -32,14 +31,15 @@
 
         @R3 // decrease the index
         M=M-1
-	D=M
-	@END
-	D;JEQ // stop the while loop if the index is 0
 
-	@WHILE
-	0;JMP // jump to the loop beggining if index not 0
+	D=M // exit the while loop if the index is 0
+	@END 
+	D;JEQ 
+
+	@WHILE // jump back to the while start if the index is not 0
+	0;JMP
 
 (END)
-	@END
-        0;JMP // Infinit loop
+	@END // Infinite loop
+        0;JMP
 	

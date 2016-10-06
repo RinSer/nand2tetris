@@ -11,45 +11,44 @@
 // "white" in every pixel;
 // the screen should remain fully clear as long as no key is pressed.
 
-// Put your code here.
+
 (START)
 	@KBD  // Load the keyboard value
         D=M
 
-	@WHITEN  // Do nothing if no key is pressed
-        D;JEQ 
+	@BLACKEN  // Black screen if any key is pressed
+        D;JNE 
 
-	@8192   // Array index kept in reg D
+	@8192  // Pixel array index
 	D=A
 
-(BLACKEN)
-	D=D-1   // Decrement the array index
+(WHITEN)
+	D=D-1  // Decrement the array index
 
-	@SCREEN
-	A=A+D   // Load the ith 16 pixels
-        M=-1
+	@SCREEN  // Load the i-th 16 pixels with zeros
+	A=A+D
+	M=0
 
-	@BLACKEN // Return to the loop start if index is not 0
+	@WHITEN  // Return to the current loop start if the index is not 0
 	D;JNE
 
-	@END   // Skip the whiten loop
+	@START  // Main loop iteration
 	0;JMP
 
-(WHITEN)
-	@8192
-	D=A  // Array index
+(BLACKEN)
+	@8192  // Pixel array index
+	D=A
 
-(LOOP)
-	D=D-1 // Decrement the array index
+(BLOOP)
+	D=D-1  // Decrement the array index
 
-	@SCREEN
-	A=A+D  // Load the ith 16 pixels
-	M=-1
+	@SCREEN  // Load the i-th 16 pixels with ones
+	A=A+D
+        M=-1
 
-	@LOOP // Return to the loop start if index is not 0
+	@BLOOP  // Return to the current loop start if the index is not 0
 	D;JNE
 
-(END)
-	@START
-        0;JMP // Infinit loop
-	
+	@START  // Main loop iteration
+	0;JMP
+
