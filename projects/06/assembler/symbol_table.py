@@ -16,6 +16,7 @@ class SymbolTable:
     """
     def __init__(self):
         self.table = dict(PREDEFINED_SYMBOLS)
+        self.free_ram = 16
 
     def contains(self, symbol):
         """
@@ -44,6 +45,20 @@ class SymbolTable:
         """
         if self.contains(symbol):
             return self.table[symbol]
+
+    def getFreeRAM(self):
+        """
+        Method to return the free RAM address.
+        Returns the address as a string.
+        """
+        return self.free_ram
+
+    def incFreeRAM(self):
+        """
+        Method to increment the free RAM address.
+        Returns nothing.
+        """
+        self.free_ram += 1
 
     def __str__(self):
         return self.table
